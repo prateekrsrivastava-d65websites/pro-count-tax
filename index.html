@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<!--
+  VS Code Instructions:
+  1. Open folder "pro-count-tax" in VS Code
+  2. Install "Live Server" extension
+  3. Right-click index.html → "Open with Live Server"
+  4. Deploy: npx netlify deploy --prod
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Pro Count Tax Consultancy — Toronto's trusted tax experts. Personal, corporate tax returns, GST/HST, bookkeeping, quick refunds and more. Get your maximum refund today." />
+  <meta name="keywords" content="tax consultant Toronto, tax return, T1, T2, GST HST, bookkeeping, corporation registration, CRA, e-filing" />
+  <meta property="og:title" content="Pro Count Tax Consultancy | Toronto Tax Experts" />
+  <meta property="og:description" content="Expert tax services in Toronto. Personal, corporate, GST/HST returns. Maximum refunds guaranteed." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://procounttax.ca" />
+  <title>Pro Count Tax Consultancy | Toronto Tax Experts</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'purple-deep': '#080115',
+            'purple-dark': '#100127',
+            'purple-mid':  '#1e0d47',
+            'purple-main': '#7c3aed',
+            'pink-main':   '#db2777',
+            'magenta':     '#c026d3',
+          },
+          fontFamily: {
+            'sans':    ['Inter', 'sans-serif'],
+            'display': ['Playfair Display', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- JSON-LD Local Business Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AccountingService",
+    "name": "Pro Count Tax Consultancy",
+    "description": "Professional tax consulting services in Toronto — personal, corporate, GST/HST, bookkeeping and corporation registration.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "123 Bay Street, Suite 200",
+      "addressLocality": "Toronto",
+      "addressRegion": "ON",
+      "postalCode": "M5H 2R2",
+      "addressCountry": "CA"
+    },
+    "telephone": "+1-416-555-0123",
+    "email": "info@procounttax.ca",
+    "url": "https://procounttax.ca",
+    "openingHours": ["Mo-Fr 09:00-18:00", "Sa 10:00-16:00"],
+    "areaServed": ["Toronto", "Mississauga", "Brampton", "Scarborough", "North York", "Markham"]
+  }
+  </script>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     LOADING SCREEN
+════════════════════════════════════════════════════════════ -->
+<div id="loading">
+  <div class="loading-inner">
+    <div class="loading-logo">PC</div>
+    <div class="loading-bar"><div class="loading-fill"></div></div>
+    <p class="loading-text">Loading Pro Count...</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ANIMATED BACKGROUND
+════════════════════════════════════════════════════════════ -->
+<div class="bg-animated">
+  <div class="bg-blob bg-blob-1"></div>
+  <div class="bg-blob bg-blob-2"></div>
+  <div class="bg-blob bg-blob-3"></div>
+  <div class="bg-blob bg-blob-4"></div>
+  <div class="bg-blob bg-blob-5"></div>
+  <canvas id="bg-canvas"></canvas>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SIDE NAVIGATION — Desktop
+════════════════════════════════════════════════════════════ -->
+<nav id="sidenav" aria-label="Side navigation">
+  <div class="sidenav-logo">PC</div>
+
+  <div class="sidenav-avatar">
+    <div class="avatar-ring">
+      <img src="https://ui-avatars.com/api/?name=Pro+Count&background=7c3aed&color=fff&size=40&bold=true" alt="Pro Count" width="40" height="40" />
+    </div>
+  </div>
+
+  <ul class="sidenav-links" role="list">
+    <li><a href="#hero"         class="sidenav-link active" data-tooltip="Home"         aria-label="Home"><i class="fas fa-home"></i></a></li>
+    <li><a href="#services"     class="sidenav-link"        data-tooltip="Services"     aria-label="Services"><i class="fas fa-th-large"></i></a></li>
+    <li><a href="#about"        class="sidenav-link"        data-tooltip="About"        aria-label="About"><i class="fas fa-layer-group"></i></a></li>
+    <li><a href="#why"          class="sidenav-link"        data-tooltip="Why Us"       aria-label="Why Us"><i class="fas fa-star"></i></a></li>
+    <li><a href="#testimonials" class="sidenav-link"        data-tooltip="Reviews"      aria-label="Reviews"><i class="fas fa-quote-left"></i></a></li>
+    <li><a href="#contact"      class="sidenav-link"        data-tooltip="Contact"      aria-label="Contact"><i class="fas fa-envelope"></i></a></li>
+  </ul>
+
+  <div class="sidenav-bottom">
+    <a href="tel:+14165550123" class="sidenav-link" data-tooltip="Call Us" aria-label="Call Us">
+      <i class="fas fa-phone"></i>
+    </a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TOP NAV — Mobile
+════════════════════════════════════════════════════════════ -->
+<header id="topnav" role="banner">
+  <a href="#hero" class="topnav-logo" aria-label="Pro Count Home">
+    <span class="logo-badge">PC</span>
+    <span class="logo-text">Pro <span>Count</span></span>
+  </a>
+  <button id="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MOBILE MENU
+════════════════════════════════════════════════════════════ -->
+<div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <div class="mobile-menu-inner">
+    <button id="mobile-close" aria-label="Close menu"><i class="fas fa-times"></i></button>
+    <ul role="list">
+      <li><a href="#hero"         class="mobile-link">Home</a></li>
+      <li><a href="#services"     class="mobile-link">Services</a></li>
+      <li><a href="#about"        class="mobile-link">About</a></li>
+      <li><a href="#why"          class="mobile-link">Why Us</a></li>
+      <li><a href="#testimonials" class="mobile-link">Testimonials</a></li>
+      <li><a href="#contact"      class="mobile-link">Contact</a></li>
+    </ul>
+    <a href="#contact" class="mobile-cta">Book Free Consultation</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MAIN CONTENT
+════════════════════════════════════════════════════════════ -->
+<main id="main">
+
+  <!-- ══════════ HERO SECTION ══════════ -->
+  <section id="hero">
+    <div class="hero-inner">
+
+      <!-- Central glass hero card -->
+      <div class="hero-card glass-panel">
+        <div class="hero-badge">
+          <i class="fas fa-shield-alt"></i>
+          <span>CRA Certified Tax Professionals</span>
+        </div>
+
+        <h1 class="hero-title">
+          Pro Count<br/>
+          <span class="gradient-text">Tax Consultancy</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Maximize Your Savings with<br/>Expert Tax Services in Toronto
+        </p>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="stat-num">5,000+</span>
+            <span class="stat-label">Happy Clients</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="stat-num">$2M+</span>
+            <span class="stat-label">Refunds Secured</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="stat-num">12+</span>
+            <span class="stat-label">Years Experience</span>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-pink">
+            <i class="fas fa-bolt"></i> Get Quick Refund
+          </a>
+          <a href="#contact" class="btn btn-glass-outline">
+            Book Consultation <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Floating notification cards -->
+      <div class="hero-float-card glass-mini float-1">
+        <div class="float-icon purple-glow-sm"><i class="fas fa-file-invoice-dollar"></i></div>
+        <div>
+          <span class="float-label">Tax Return Filed</span>
+          <span class="float-value">+$3,840 Refund</span>
+        </div>
+      </div>
+
+      <div class="hero-float-card glass-mini float-2">
+        <div class="float-icon pink-glow-sm"><i class="fas fa-check-circle"></i></div>
+        <div>
+          <span class="float-label">E-Filed Today</span>
+          <span class="float-value">98% Approval Rate</span>
+        </div>
+      </div>
+
+      <div class="hero-float-card glass-mini float-3">
+        <div class="float-icon gold-glow-sm"><i class="fas fa-chart-line"></i></div>
+        <div>
+          <span class="float-label">Savings Optimized</span>
+          <span class="float-value">$12,400 Found</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="scroll-hint" aria-hidden="true">
+      <div class="scroll-dot"></div>
+      <span>Scroll to explore</span>
+    </div>
+  </section>
+
+  <!-- ══════════ SERVICES SECTION ══════════ -->
+  <section id="services" class="section">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-badge"><i class="fas fa-th-large"></i>&nbsp; Our Services</div>
+        <h2 class="section-title">Everything You Need for <span class="gradient-text">Tax Success</span></h2>
+        <p class="section-subtitle">Comprehensive tax and financial services tailored for individuals and businesses across Toronto and the GTA.</p>
+      </div>
+
+      <div class="services-grid">
+
+        <!-- Tax Planning -->
+        <div class="flip-card reveal">
+          <div class="flip-card-inner">
+            <div class="flip-card-front glass-panel">
+              <div class="service-icon-wrap purple-glow"><i class="fas fa-route"></i></div>
+              <h3>Tax Planning</h3>
+              <p>Strategic year-round planning to minimize your tax burden and maximize deductions before filing season.</p>
+              <div class="service-tags"><span>Personal</span><span>Corporate</span></div>
+              <span class="flip-hint"><i class="fas fa-sync-alt"></i> Hover to learn more</span>
+            </div>
+            <div class="flip-card-back glass-panel">
+              <div class="flip-back-icon purple-glow"><i class="fas fa-route"></i></div>
+              <h3>Tax Planning</h3>
+              <ul class="flip-benefits">
+                <li><i class="fas fa-check"></i> Reduce taxable income legally</li>
+                <li><i class="fas fa-check"></i> Maximize all eligible deductions</li>
+                <li><i class="fas fa-check"></i> Year-round strategic advice</li>
+                <li><i class="fas fa-check"></i> RRSP &amp; TFSA optimization</li>
+              </ul>
+              <a href="#contact" class="btn btn-pink flip-cta">Get Started <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bookkeeping -->
+        <div class="flip-card reveal">
+          <div class="flip-card-inner">
+            <div class="flip-card-front glass-panel">
+              <div class="service-icon-wrap pink-glow"><i class="fas fa-book-open"></i></div>
+              <h3>Bookkeeping</h3>
+              <p>Accurate, CRA-compliant bookkeeping services for small businesses and self-employed individuals.</p>
+              <div class="service-tags"><span>Monthly</span><span>Annual</span></div>
+              <span class="flip-hint"><i class="fas fa-sync-alt"></i> Hover to learn more</span>
+            </div>
+            <div class="flip-card-back glass-panel">
+              <div class="flip-back-icon pink-glow"><i class="fas fa-book-open"></i></div>
+              <h3>Bookkeeping</h3>
+              <ul class="flip-benefits">
+                <li><i class="fas fa-check"></i> Monthly financial reports</li>
+                <li><i class="fas fa-check"></i> Bank reconciliation</li>
+                <li><i class="fas fa-check"></i> Payroll management</li>
+                <li><i class="fas fa-check"></i> CRA audit-ready records</li>
+              </ul>
+              <a href="#contact" class="btn btn-pink flip-cta">Get Started <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Refunds — Featured -->
+        <div class="flip-card reveal featured-service">
+          <div class="featured-badge">Most Popular</div>
+          <div class="flip-card-inner">
+            <div class="flip-card-front glass-panel">
+              <div class="service-icon-wrap gold-glow"><i class="fas fa-bolt"></i></div>
+              <h3>Quick Refunds</h3>
+              <p>Fast-track your tax refund. Most refunds processed and deposited within 5–8 business days.</p>
+              <div class="service-tags"><span>Same Day</span><span>Direct Deposit</span></div>
+              <span class="flip-hint"><i class="fas fa-sync-alt"></i> Hover to learn more</span>
+            </div>
+            <div class="flip-card-back glass-panel">
+              <div class="flip-back-icon gold-glow"><i class="fas fa-bolt"></i></div>
+              <h3>Quick Refunds</h3>
+              <ul class="flip-benefits">
+                <li><i class="fas fa-check"></i> Refund in 5–8 business days</li>
+                <li><i class="fas fa-check"></i> Direct deposit to your bank</li>
+                <li><i class="fas fa-check"></i> Same-day processing starts</li>
+                <li><i class="fas fa-check"></i> Maximum refund guaranteed</li>
+              </ul>
+              <a href="#contact" class="btn btn-pink flip-cta">Get Started <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- E-Filing -->
+        <div class="flip-card reveal">
+          <div class="flip-card-inner">
+            <div class="flip-card-front glass-panel">
+              <div class="service-icon-wrap teal-glow"><i class="fas fa-paper-plane"></i></div>
+              <h3>E-Filing</h3>
+              <p>Secure, fast electronic filing with CRA. Instant confirmation and maximum accuracy guaranteed.</p>
+              <div class="service-tags"><span>Secure</span><span>Instant</span></div>
+              <span class="flip-hint"><i class="fas fa-sync-alt"></i> Hover to learn more</span>
+            </div>
+            <div class="flip-card-back glass-panel">
+              <div class="flip-back-icon teal-glow"><i class="fas fa-paper-plane"></i></div>
+              <h3>E-Filing</h3>
+              <ul class="flip-benefits">
+                <li><i class="fas fa-check"></i> CRA NETFILE certified</li>
+                <li><i class="fas fa-check"></i> Instant CRA confirmation</li>
+                <li><i class="fas fa-check"></i> Bank-level encryption</li>
+                <li><i class="fas fa-check"></i> Error-free submission</li>
+              </ul>
+              <a href="#contact" class="btn btn-pink flip-cta">Get Started <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Individual & Family -->
+        <div class="flip-card reveal">
+          <div class="flip-card-inner">
+            <div class="flip-card-front glass-panel">
+              <div class="service-icon-wrap purple-glow"><i class="fas fa-users"></i></div>
+              <h3>Individual &amp; Family Returns</h3>
+              <p>Complete personal tax returns for individuals, couples, students, seniors, and new immigrants.</p>
+              <div class="service-tags"><span>T1 Returns</span><span>All Situations</span></div>
+              <span class="flip-hint"><i class="fas fa-sync-alt"></i> Hover to learn more</span>
+            </div>
+            <div class="flip-card-back glass-panel">
+              <div class="flip-back-icon purple-glow"><i class="fas fa-users"></i></div>
+              <h3>Individual &amp; Family</h3>
+              <ul class="flip-benefits">
+                <li><i class="fas fa-check"></i> Couples &amp; family returns</li>
+                <li><i class="fas fa-check"></i> Students &amp; new immigrants</li>
+                <li><i class="fas fa-check"></i> Senior &amp; disability credits</li>
+                <li><i class="fas fa-check"></i> RRSP &amp; childcare deductions</li>
+              </ul>
+              <a href="#contact" class="btn btn-pink flip-cta">Get Started <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Corporate Tax -->
+        <div class="flip-card reveal">
+          <div class="flip-card-inner">
+            <div class="flip-card-front glass-panel">
+              <div class="service-icon-wrap pink-glow"><i class="fas fa-building"></i></div>
+              <h3>Corporate Tax Returns</h3>
+              <p>T2 corporate returns, financial statements, and CRA correspondence for all business types.</p>
+              <div class="service-tags"><span>T2</span><span>Corporations</span></div>
+              <span class="flip-hint"><i class="fas fa-sync-alt"></i> Hover to learn more</span>
+            </div>
+            <div class="flip-card-back glass-panel">
+              <div class="flip-back-icon pink-glow"><i class="fas fa-building"></i></div>
+              <h3>Corporate Tax</h3>
+              <ul class="flip-benefits">
+                <li><i class="fas fa-check"></i> T2 corporate returns</li>
+                <li><i class="fas fa-check"></i> Financial statements prep</li>
+                <li><i class="fas fa-check"></i> CRA correspondence handled</li>
+                <li><i class="fas fa-check"></i> All corporation sizes</li>
+              </ul>
+              <a href="#contact" class="btn btn-pink flip-cta">Get Started <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- GST/HST -->
+        <div class="flip-card reveal">
+          <div class="flip-card-inner">
+            <div class="flip-card-front glass-panel">
+              <div class="service-icon-wrap teal-glow"><i class="fas fa-receipt"></i></div>
+              <h3>GST/HST Returns</h3>
+              <p>Timely GST/HST filing, registration, and ITC optimization for businesses of all sizes.</p>
+              <div class="service-tags"><span>GST</span><span>HST</span><span>ITC</span></div>
+              <span class="flip-hint"><i class="fas fa-sync-alt"></i> Hover to learn more</span>
+            </div>
+            <div class="flip-card-back glass-panel">
+              <div class="flip-back-icon teal-glow"><i class="fas fa-receipt"></i></div>
+              <h3>GST/HST Returns</h3>
+              <ul class="flip-benefits">
+                <li><i class="fas fa-check"></i> GST/HST registration</li>
+                <li><i class="fas fa-check"></i> Timely quarterly filing</li>
+                <li><i class="fas fa-check"></i> Maximum ITC recovery</li>
+                <li><i class="fas fa-check"></i> CRA compliance ensured</li>
+              </ul>
+              <a href="#contact" class="btn btn-pink flip-cta">Get Started <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Corporation Registration -->
+        <div class="flip-card reveal">
+          <div class="flip-card-inner">
+            <div class="flip-card-front glass-panel">
+              <div class="service-icon-wrap gold-glow"><i class="fas fa-registered"></i></div>
+              <h3>Corporation Registration</h3>
+              <p>Federal and provincial corporation incorporation, business number registration, and full setup support.</p>
+              <div class="service-tags"><span>Federal</span><span>Provincial</span></div>
+              <span class="flip-hint"><i class="fas fa-sync-alt"></i> Hover to learn more</span>
+            </div>
+            <div class="flip-card-back glass-panel">
+              <div class="flip-back-icon gold-glow"><i class="fas fa-registered"></i></div>
+              <h3>Corp. Registration</h3>
+              <ul class="flip-benefits">
+                <li><i class="fas fa-check"></i> Federal &amp; provincial filing</li>
+                <li><i class="fas fa-check"></i> Business number (BN) setup</li>
+                <li><i class="fas fa-check"></i> Articles of incorporation</li>
+                <li><i class="fas fa-check"></i> Full compliance support</li>
+              </ul>
+              <a href="#contact" class="btn btn-pink flip-cta">Get Started <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ ABOUT SECTION ══════════ -->
+  <section id="about" class="section">
+    <div class="section-inner">
+      <div class="about-grid">
+
+        <!-- Left: Text + Features -->
+        <div class="about-left reveal">
+          <div class="section-badge"><i class="fas fa-layer-group"></i>&nbsp; About Us</div>
+          <h2 class="section-title">Toronto's Trusted<br/><span class="gradient-text">Tax Experts</span></h2>
+          <p class="about-desc">Since 2012, Pro Count Tax Consultancy has been helping thousands of Torontonians and GTA businesses navigate the complexities of Canadian tax law. Our team of certified professionals ensures you keep more of what you earn — every single year.</p>
+
+          <div class="about-features">
+            <div class="about-feature glass-mini">
+              <div class="feature-icon"><i class="fas fa-award"></i></div>
+              <div>
+                <h4>CRA Authorized</h4>
+                <p>Licensed and authorized e-file providers</p>
+              </div>
+            </div>
+            <div class="about-feature glass-mini">
+              <div class="feature-icon"><i class="fas fa-lock"></i></div>
+              <div>
+                <h4>100% Secure</h4>
+                <p>Bank-level encryption for all your documents</p>
+              </div>
+            </div>
+            <div class="about-feature glass-mini">
+              <div class="feature-icon"><i class="fas fa-headset"></i></div>
+              <div>
+                <h4>Year-Round Support</h4>
+                <p>Always available for your tax questions</p>
+              </div>
+            </div>
+            <div class="about-feature glass-mini">
+              <div class="feature-icon"><i class="fas fa-money-bill-wave"></i></div>
+              <div>
+                <h4>Maximum Refund</h4>
+                <p>We find every deduction you're owed</p>
+              </div>
+            </div>
+          </div>
+
+          <a href="#contact" class="btn btn-pink" style="margin-top:32px;">
+            Start Your Return <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <!-- Right: Stats + Timeline -->
+        <div class="about-right reveal">
+          <div class="about-stats-card glass-panel">
+            <h3 class="stats-title">Our Impact in Numbers</h3>
+            <div class="about-stats-grid">
+              <div class="about-stat">
+                <span class="stat-big gradient-text" data-count="5000" data-suffix="+">0</span>
+                <span>Clients Served</span>
+              </div>
+              <div class="about-stat">
+                <span class="stat-big gradient-text" data-count="98" data-suffix="%">0</span>
+                <span>Satisfaction Rate</span>
+              </div>
+              <div class="about-stat">
+                <span class="stat-big gradient-text" data-count="2" data-prefix="$" data-suffix="M+">0</span>
+                <span>Refunds Secured</span>
+              </div>
+              <div class="about-stat">
+                <span class="stat-big gradient-text" data-count="12" data-suffix="+ Yrs">0</span>
+                <span>Experience</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline -->
+          <div class="timeline">
+            <div class="timeline-item glass-mini">
+              <div class="timeline-dot"><span>2012</span></div>
+              <div class="timeline-content">
+                <h4>Founded in Toronto</h4>
+                <p>Opened first office in North York, serving local families and individuals.</p>
+              </div>
+            </div>
+            <div class="timeline-item glass-mini">
+              <div class="timeline-dot"><span>2016</span></div>
+              <div class="timeline-content">
+                <h4>Corporate Services Added</h4>
+                <p>Expanded to T2, GST/HST, and corporate incorporation services.</p>
+              </div>
+            </div>
+            <div class="timeline-item glass-mini">
+              <div class="timeline-dot"><span>2020</span></div>
+              <div class="timeline-content">
+                <h4>E-Filing &amp; Remote Services</h4>
+                <p>Launched secure online portal for fully remote tax filing.</p>
+              </div>
+            </div>
+            <div class="timeline-item glass-mini">
+              <div class="timeline-dot"><span>2024</span></div>
+              <div class="timeline-content">
+                <h4>5,000+ Clients Milestone</h4>
+                <p>Serving Toronto, Mississauga, Scarborough, Brampton &amp; beyond.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ WHY CHOOSE US ══════════ -->
+  <section id="why" class="section">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-badge"><i class="fas fa-star"></i>&nbsp; Why Choose Us</div>
+        <h2 class="section-title">The Pro Count <span class="gradient-text">Advantage</span></h2>
+        <p class="section-subtitle">We go further than other tax firms to ensure you walk away with more money and zero stress.</p>
+      </div>
+
+      <div class="why-grid">
+        <div class="why-card glass-panel reveal">
+          <div class="why-icon"><i class="fas fa-clock"></i></div>
+          <h3>Fast Turnaround</h3>
+          <p>Most returns completed and filed within 24–48 hours of receiving your documents.</p>
+        </div>
+        <div class="why-card glass-panel reveal">
+          <div class="why-icon"><i class="fas fa-search-dollar"></i></div>
+          <h3>Maximum Refund Guarantee</h3>
+          <p>Our experts identify every eligible deduction and credit — guaranteed or your money back.</p>
+        </div>
+        <div class="why-card glass-panel reveal">
+          <div class="why-icon"><i class="fas fa-shield-alt"></i></div>
+          <h3>CRA Audit Support</h3>
+          <p>Full representation and support if you ever receive a CRA audit or review letter.</p>
+        </div>
+        <div class="why-card glass-panel reveal">
+          <div class="why-icon"><i class="fas fa-globe"></i></div>
+          <h3>Multi-Language Support</h3>
+          <p>Services available in English, Punjabi, Hindi, Urdu, and Gujarati for your convenience.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ TESTIMONIALS SECTION ══════════ -->
+  <section id="testimonials" class="section">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-badge"><i class="fas fa-quote-left"></i>&nbsp; Testimonials</div>
+        <h2 class="section-title">What Our <span class="gradient-text">Clients Say</span></h2>
+        <p class="section-subtitle">Real stories from real people who maximized their refunds with Pro Count.</p>
+      </div>
+
+      <div class="testimonials-wrapper">
+        <div class="testimonials-track" id="testimonials-track">
+
+          <div class="testimonial-card glass-panel">
+            <div class="test-stars">★★★★★</div>
+            <p class="test-quote">"Pro Count saved me over $4,200 on my taxes this year! They found deductions I had no idea I was eligible for. Absolutely incredible service from start to finish."</p>
+            <div class="test-author">
+              <img src="https://ui-avatars.com/api/?name=Sarah+M&background=7c3aed&color=fff&size=48&bold=true" alt="Sarah M" />
+              <div>
+                <span class="test-name">Sarah Mitchell</span>
+                <span class="test-role">Registered Nurse, Scarborough</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card glass-panel">
+            <div class="test-stars">★★★★★</div>
+            <p class="test-quote">"As a small business owner, taxes always stressed me out. Pro Count handles everything — bookkeeping, HST, T2. I can finally focus on growing my restaurant."</p>
+            <div class="test-author">
+              <img src="https://ui-avatars.com/api/?name=Raj+P&background=db2777&color=fff&size=48&bold=true" alt="Raj P" />
+              <div>
+                <span class="test-name">Rajinder Patel</span>
+                <span class="test-role">Restaurant Owner, Brampton</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card glass-panel">
+            <div class="test-stars">★★★★★</div>
+            <p class="test-quote">"Got my refund in just 6 days! The team was professional, responsive, and explained everything clearly in Punjabi too. I will never go anywhere else for my taxes."</p>
+            <div class="test-author">
+              <img src="https://ui-avatars.com/api/?name=Mei+L&background=c026d3&color=fff&size=48&bold=true" alt="Mei L" />
+              <div>
+                <span class="test-name">Mei Lin</span>
+                <span class="test-role">Software Developer, North York</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card glass-panel">
+            <div class="test-stars">★★★★★</div>
+            <p class="test-quote">"Pro Count helped us register our corporation and handle all our tax obligations from day one. Outstanding expertise, transparent pricing, and genuinely caring staff."</p>
+            <div class="test-author">
+              <img src="https://ui-avatars.com/api/?name=David+K&background=7c3aed&color=fff&size=48&bold=true" alt="David K" />
+              <div>
+                <span class="test-name">David Kowalski</span>
+                <span class="test-role">IT Consultant, Mississauga</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="test-nav">
+          <button class="test-btn" id="test-prev" aria-label="Previous testimonial">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <div class="test-dots" id="test-dots"></div>
+          <button class="test-btn" id="test-next" aria-label="Next testimonial">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ CONTACT SECTION ══════════ -->
+  <section id="contact" class="section">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-badge"><i class="fas fa-envelope"></i>&nbsp; Contact Us</div>
+        <h2 class="section-title">Get Your Free <span class="gradient-text">Consultation</span></h2>
+        <p class="section-subtitle">Ready to maximize your refund? Our tax experts are standing by to help you.</p>
+      </div>
+
+      <div class="contact-grid">
+
+        <!-- Contact Form -->
+        <div class="contact-form-wrap glass-panel reveal">
+          <h3 class="form-title">Send Us a Message</h3>
+          <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Full Name</label>
+                <div class="input-wrap">
+                  <i class="fas fa-user"></i>
+                  <input type="text" id="name" name="name" placeholder="John Smith" required autocomplete="name" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <div class="input-wrap">
+                  <i class="fas fa-envelope"></i>
+                  <input type="email" id="email" name="email" placeholder="john@example.com" required autocomplete="email" />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <div class="input-wrap">
+                  <i class="fas fa-phone"></i>
+                  <input type="tel" id="phone" name="phone" placeholder="+1 (416) 555-0123" autocomplete="tel" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="service">Service Needed</label>
+                <div class="input-wrap select-wrap">
+                  <i class="fas fa-list"></i>
+                  <select id="service" name="service">
+                    <option value="">Select a Service</option>
+                    <option>Tax Planning</option>
+                    <option>Bookkeeping</option>
+                    <option>Quick Refund</option>
+                    <option>E-Filing</option>
+                    <option>Individual &amp; Family Return</option>
+                    <option>Corporate Tax Return</option>
+                    <option>GST/HST Return</option>
+                    <option>Corporation Registration</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message</label>
+              <div class="input-wrap textarea-wrap">
+                <i class="fas fa-comment"></i>
+                <textarea id="message" name="message" rows="4" placeholder="Tell us about your tax situation..."></textarea>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-pink submit-btn">
+              <span class="btn-text"><i class="fas fa-paper-plane"></i> Send Message</span>
+              <span class="btn-loading hidden"><i class="fas fa-spinner fa-spin"></i> Sending...</span>
+            </button>
+          </form>
+
+          <div id="form-success" class="form-success hidden">
+            <i class="fas fa-check-circle"></i>
+            <p>Message sent! We'll contact you within 24 hours.</p>
+          </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="contact-info reveal">
+          <div class="contact-info-card glass-panel">
+            <h3>Get in Touch</h3>
+            <div class="contact-item">
+              <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+              <div>
+                <span class="ci-label">Office Address</span>
+                <span class="ci-value">123 Bay Street, Suite 200<br/>Toronto, ON M5H 2R2</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+              <div>
+                <span class="ci-label">Phone</span>
+                <span class="ci-value"><a href="tel:+14165550123">+1 (416) 555-0123</a></span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+              <div>
+                <span class="ci-label">Email</span>
+                <span class="ci-value"><a href="mailto:info@procounttax.ca">info@procounttax.ca</a></span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><i class="fas fa-clock"></i></div>
+              <div>
+                <span class="ci-label">Business Hours</span>
+                <span class="ci-value">Mon–Fri: 9AM–6PM<br/>Sat: 10AM–4PM</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Map Card -->
+          <div class="contact-map glass-panel">
+            <div class="map-inner">
+              <i class="fas fa-map-marked-alt map-icon"></i>
+              <p>Toronto, Ontario</p>
+              <span>Bay Street Financial District</span>
+              <a href="https://maps.google.com/?q=Bay+Street+Toronto+ON" target="_blank" rel="noopener noreferrer" class="btn btn-purple-sm">
+                View on Maps <i class="fas fa-external-link-alt"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Urgency Banner -->
+          <div class="urgency-card glass-panel">
+            <i class="fas fa-exclamation-triangle urgency-icon"></i>
+            <div>
+              <h4>Tax Deadline Approaching!</h4>
+              <p>April 30 filing deadline. Book your appointment now to avoid CRA penalties and interest.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════ -->
+<footer id="footer">
+  <div class="footer-inner glass-panel">
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-badge">PC</span>
+          <span class="footer-logo-text">Pro Count<br/><small>Tax Consultancy</small></span>
+        </div>
+        <p>Toronto's trusted tax professionals since 2012. Maximizing refunds and minimizing tax stress for thousands of Canadians.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Tax Planning</a></li>
+          <li><a href="#services">Bookkeeping</a></li>
+          <li><a href="#services">Quick Refunds</a></li>
+          <li><a href="#services">E-Filing</a></li>
+          <li><a href="#services">Corporate Returns</a></li>
+          <li><a href="#services">GST/HST Returns</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#why">Why Choose Us</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><i class="fas fa-map-marker-alt"></i> 123 Bay St, Toronto ON</li>
+          <li><i class="fas fa-phone"></i> +1 (416) 555-0123</li>
+          <li><i class="fas fa-envelope"></i> info@procounttax.ca</li>
+          <li><i class="fas fa-clock"></i> Mon–Sat: 9AM–6PM</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Pro Count Tax Consultancy. All rights reserved. | CRA Authorized E-File Provider</p>
+      <p class="footer-tagline">Built with ♥ in Toronto, Ontario, Canada 🇨🇦</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FLOATING CTA BUTTON
+════════════════════════════════════════════════════════════ -->
+<a href="#contact" class="floating-cta" aria-label="Free consultation">
+  <i class="fas fa-calculator"></i>
+  <span>Free Consult</span>
+</a>
+
+<!-- Scripts -->
+<script src="script.js"></script>
+</body>
+</html>
