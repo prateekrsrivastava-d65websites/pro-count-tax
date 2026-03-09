@@ -433,57 +433,17 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     }
   }
 
-  // Which corner to use per section — chosen to avoid main content
-  const sectionCorner = {
-    hero:         'top-right',
-    services:     'bottom-left',
-    about:        'top-right',
-    why:          'bottom-right',
-    testimonials: 'top-left',
-    contact:      'bottom-left',
-  };
+  // Always pinned to top-right
+  const p = pos('top-right');
+  btn.style.top    = p.top  + 'px';
+  btn.style.left   = p.left + 'px';
+  btn.style.right  = 'auto';
+  btn.style.bottom = 'auto';
 
-  function moveTo(corner) {
-    const p = pos(corner);
-    btn.style.top   = p.top  + 'px';
-    btn.style.left  = p.left + 'px';
-    btn.style.right  = 'auto';
-    btn.style.bottom = 'auto';
-  }
-
-  // Set initial position immediately (no transition yet)
-  btn.style.transition = 'none';
-  moveTo('top-right');
-  // Re-enable transition after first paint
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => { btn.style.transition = ''; });
-  });
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const corner = sectionCorner[entry.target.id];
-        if (corner) moveTo(corner);
-      }
-    });
-  }, { threshold: 0.35 });
-
-  Object.keys(sectionCorner).forEach(id => {
-    const el = document.getElementById(id);
-    if (el) observer.observe(el);
-  });
-
-  // Recompute on resize to stay within viewport
   window.addEventListener('resize', () => {
-    btn.style.transition = 'none';
-    const current = Object.keys(sectionCorner).find(id => {
-      const el = document.getElementById(id);
-      if (!el) return false;
-      const r = el.getBoundingClientRect();
-      return r.top < window.innerHeight * 0.65 && r.bottom > 0;
-    });
-    moveTo(sectionCorner[current] || 'top-right');
-    requestAnimationFrame(() => requestAnimationFrame(() => { btn.style.transition = ''; }));
+    const rp = pos('top-right');
+    btn.style.top  = rp.top  + 'px';
+    btn.style.left = rp.left + 'px';
   }, { passive: true });
 })();
 
